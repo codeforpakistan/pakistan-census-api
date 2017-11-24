@@ -5,6 +5,7 @@ from flask_restful import Api
 from flask_restful import Resource
 from json import dumps
 from sqlalchemy import create_engine
+from models import District
 
 # db_connect = create_engine('sqlite:///chinook.db')
 connection = MongoClient("mongodb://mubbi:123456@ds115625.mlab.com:15625/pakistancensus")
