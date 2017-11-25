@@ -1,3 +1,6 @@
 flask
 flask-restful
 mongoengine
+pandas
+Flask-Cors
+gunicorn
