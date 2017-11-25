@@ -2,11 +2,13 @@
 
 ## Running
 1. ```virtualenv venv```
-2. ```pip install requirements.txt```
+2. ```pip install -r requirements.txt```
 3. ```python app.py```
 
 ## Methods
-_Todo_
+### Provinces
+
+#### Get all provinces
 
 ## Tests
 _Todo_

@@ -1,42 +1,31 @@
 from flask import Flask
 from flask import request
-from flask.ext.jsonpify import jsonify
 from flask_restful import Api
 from flask_restful import Resource
 from json import dumps
-from sqlalchemy import create_engine
-
-# db_connect = create_engine('sqlite:///chinook.db')
-connection = MongoClient("mongodb://mubbi:123456@ds115625.mlab.com:15625/pakistancensus")
+from pymongo import MongoClient
+import pandas as pd
 
 app = Flask(__name__)
 api = Api(app)
 
-class Employees(Resource):
+class Provinces(Resource):
     def get(self):
-        conn = db_connect.connect() # connect to database
-        query = conn.execute("select * from employees") # This line performs query and returns json result
-        return {'employees': [i[0] for i in query.cursor.fetchall()]} # Fetches first column that is Employee ID
+        uri = "mongodb://pakistancensus:CwTZjX2WgUICeQbc7zUPBCiP9JlDe7AfD9Qe6u9XYeW4jLKdMOXuF5qzrNYATiMKkCylsigwnNY4lAlN9e9eBA==@pakistancensus.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+        client = MongoClient(uri)
 
-class Tracks(Resource):
-    def get(self):
-        conn = db_connect.connect()
-        query = conn.execute("select trackid, name, composer, unitprice from tracks;")
-        result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
-        return jsonify(result)
+        db = client['pakistancensus']
 
-class Employees_Name(Resource):
-    def get(self, employee_id):
-        conn = db_connect.connect()
-        query = conn.execute("select * from employees where EmployeeId =%d "  %int(employee_id))
-        result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
-        return jsonify(result)
+        eqn_df = pd.DataFrame(list(db.provinces.find()))
+        print eqn_df
+
+        return eqn_df.to_json(orient='records')
 
 
-api.add_resource(Employees, '/employees') # Route_1
-api.add_resource(Tracks, '/tracks') # Route_2
-api.add_resource(Employees_Name, '/employees/<employee_id>') # Route_3
+
+
+api.add_resource(Provinces, '/provinces') # Route_1
 
 
 if __name__ == '__main__':
-     app.run(port='5002')
+     app.run(port=5002,debug=True)
