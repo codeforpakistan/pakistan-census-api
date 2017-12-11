@@ -11,15 +11,12 @@ api = Api(app)
 
 class Provinces(Resource):
     def get(self):
-        uri = "mongodb://pakistancensus:CwTZjX2WgUICeQbc7zUPBCiP9JlDe7AfD9Qe6u9XYeW4jLKdMOXuF5qzrNYATiMKkCylsigwnNY4lAlN9e9eBA==@pakistancensus.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
-        client = MongoClient(uri)
 
-        db = client['pakistancensus']
 
-        eqn_df = pd.DataFrame(list(db.provinces.find()))
-        print eqn_df
+        provinces_df = pd.read_excel("DISTRICT_WISE_CENSUS_RESULTS_CENSUS_2017.xlsx","Province_Wise")
+        print provinces_df
 
-        return eqn_df.to_json(orient='records')
+        return provinces_df.to_dict(orient='records')
 
 
 
