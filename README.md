@@ -21,7 +21,7 @@ GET ```/districts```
 ### Top 10 Cities
 
 #### Get top 10 cities in terms of population
-GET ```/provinces```
+GET ```/cities```
 
 
 ## Tests
