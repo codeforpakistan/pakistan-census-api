@@ -18,9 +18,18 @@ class Provinces(Resource):
     return provinces_df.to_dict(orient='records')
 
 
+class Cities(Resource):
+  def get(self):
+    cities_df = pd.read_excel("DISTRICT_WISE_CENSUS_RESULTS_CENSUS_2017.xlsx","City_Wise")
+
+    return cities_df.to_dict(orient='records')
+
+
 
 
 api.add_resource(Provinces, '/provinces') # Route_1
+api.add_resource(Cities, '/cities') # Route_2
+
 
 
 if __name__ == '__main__':
